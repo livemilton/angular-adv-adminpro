@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
 
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,8 +22,12 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    RouterModule,
     RouterOutlet,
-    FormsModule 
+    FormsModule,
+    RouterLink,
+    ReactiveFormsModule,
+    HttpClientModule,
   ]
 })
 export class AuthModule { }
