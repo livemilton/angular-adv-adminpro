@@ -33,7 +33,7 @@ export class RegisterComponent {
   //metodo crear usuario
   crearUsuario(){
     this.formSubmitted = true;
-    console.log( this.registerForm.value);
+    //console.log( this.registerForm.value);
 
     //Mensaje para usuario en el posteo del form
     if( this.registerForm.invalid){

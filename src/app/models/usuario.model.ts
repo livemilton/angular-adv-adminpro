@@ -1,3 +1,8 @@
+import { environment } from "../environments/environment";
+
+//para cargar imagenes con getimagen
+const base_url = environment.base_url;
+
 export class Usuario{
 
     constructor(
@@ -9,5 +14,19 @@ export class Usuario{
         public role?: string,
         public uid?: string,
     ){}
+
+    get imagenUrl(){
+        
+        //validacion con google usuario!
+        if( this.img?.includes('https')){
+            return this.img;
+        }
+
+        if (this.img){
+            return `${base_url}/upload/usuarios/${this.img}`;
+        }else {
+            return `${base_url}/upload/usuarios/no-image`;
+        }
+    }
 
 }
