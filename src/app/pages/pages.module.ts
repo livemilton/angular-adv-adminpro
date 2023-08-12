@@ -15,6 +15,7 @@ import { AccountsSettingsComponent } from './accounts-settings/accounts-settings
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 
 
 
@@ -28,7 +29,8 @@ import { PerfilComponent } from './perfil/perfil.component';
     AccountsSettingsComponent,
     PromesasComponent,
     RxjsComponent,
-    PerfilComponent
+    PerfilComponent,
+    UsuariosComponent
   ],
   exports:[
     DashboardComponent,

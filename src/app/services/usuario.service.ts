@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import{ tap, map, catchError} from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { Observable, of } from 'rxjs';
+import{ tap, map, catchError, delay} from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 
 import { registerForm } from '../interfaces/register-form.interfaces';
 import { LoginForm } from '../interfaces/login-form.interface';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
+
 import { Usuario } from '../models/usuario.model';
+
 
 declare const google: any;
 
@@ -41,6 +45,14 @@ export class UsuarioService {
     return this.usuario.uid || '';
   }
 
+  //get headers
+  get headers(){
+    return{
+      headers: {
+        'x-token': this.token
+      }
+    }
+  }
 
   //googleInit ----
 
@@ -157,5 +169,38 @@ export class UsuarioService {
       )
   }
 
+  //cargar usuarios metodo
+  //se realiza una interfaz cargar usuario para tener el tipado en el metodo usuariosComponent
+  //usar el operador map y crear una nueva instancia de los usuarios
+  cargarUsuarios( desde: number =0){
+    const url =`${base_url}/usuarios?desde=${desde}`;
+    return this.http.get<CargarUsuario>( url, this.headers)
+        .pipe(
+          delay(500),
+          map( resp =>{
+            const usuarios = resp.usuarios.map( 
+              user => new Usuario(user.nombre, user.email, '', user.img, user.google, user.role, user.uid)
+            );
+
+            return{
+              total: resp.total,
+              usuarios
+            };
+          })
+        )
+  }
+
+  //eliminar usuario
+  eliminarUsuario( usuario: Usuario){
+
+    const url =`${base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  //guardarRole Usuario
+  guardarUsuario( usuario: Usuario){
+    //servicio similar al actualizar perfil
+    return this.http.put(`${base_url}/usuarios/${usuario.uid}`,usuario, this.headers);
+  }
 
 }
